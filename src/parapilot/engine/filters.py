@@ -665,6 +665,14 @@ def triangulate(data: vtk.vtkDataObject) -> vtk.vtkDataObject:
 # ---------------------------------------------------------------------------
 
 # Map of filter name → function (for declarative pipeline specs)
+def _normalize_filter_name(name: str) -> str:
+    """Normalize filter name: CamelCase → snake_case, then lowercase."""
+    import re
+    # CamelCase → snake_case: insert _ before uppercase letters
+    s = re.sub(r"(?<=[a-z0-9])([A-Z])", r"_\1", name)
+    return s.lower()
+
+
 _FILTER_REGISTRY: dict[str, object] = {
     "slice": slice_plane,
     "clip": clip_plane,
@@ -672,9 +680,11 @@ _FILTER_REGISTRY: dict[str, object] = {
     "isosurface": isosurface,
     "threshold": threshold,
     "streamlines": streamlines,
+    "stream_tracer": streamlines,
     "calculator": calculator,
     "gradient": gradient,
     "integrate": integrate_variables,
+    "integrate_variables": integrate_variables,
     "extract_block": extract_block,
     "extract_surface": extract_surface,
     "warp_by_vector": warp_by_vector,
@@ -706,7 +716,7 @@ def apply_filter(
     Raises:
         ValueError: If filter_name is not recognized.
     """
-    func = _FILTER_REGISTRY.get(filter_name.lower())
+    func = _FILTER_REGISTRY.get(_normalize_filter_name(filter_name))
     if func is None:
         available = ", ".join(sorted(_FILTER_REGISTRY.keys()))
         msg = f"Unknown filter '{filter_name}'. Available: {available}"
