@@ -92,6 +92,38 @@ _GRAYSCALE: list[tuple[float, float, float, float]] = [
     (1.0, 1.0, 1.0, 1.0),
 ]
 
+_TURBO: list[tuple[float, float, float, float]] = [
+    (0.000, 0.190, 0.072, 0.232),
+    (0.100, 0.292, 0.381, 0.897),
+    (0.200, 0.129, 0.666, 0.998),
+    (0.300, 0.063, 0.876, 0.821),
+    (0.400, 0.337, 0.970, 0.545),
+    (0.500, 0.660, 0.992, 0.277),
+    (0.600, 0.912, 0.892, 0.100),
+    (0.700, 0.996, 0.690, 0.012),
+    (0.800, 0.974, 0.434, 0.005),
+    (0.900, 0.836, 0.180, 0.055),
+    (1.000, 0.530, 0.023, 0.062),
+]
+
+_TERRAIN: list[tuple[float, float, float, float]] = [
+    (0.000, 0.200, 0.290, 0.580),
+    (0.150, 0.000, 0.600, 0.500),
+    (0.250, 0.000, 0.800, 0.400),
+    (0.500, 0.930, 0.930, 0.600),
+    (0.750, 0.530, 0.320, 0.100),
+    (0.850, 0.600, 0.530, 0.400),
+    (1.000, 1.000, 1.000, 1.000),
+]
+
+_MAGMA: list[tuple[float, float, float, float]] = [
+    (0.000, 0.001, 0.000, 0.014),
+    (0.250, 0.283, 0.088, 0.463),
+    (0.500, 0.716, 0.215, 0.475),
+    (0.750, 0.993, 0.536, 0.382),
+    (1.000, 0.987, 0.991, 0.750),
+]
+
 # ---------------------------------------------------------------------------
 # Registry — name → control points
 # Names are case-insensitive, with aliases for common spellings.
@@ -109,6 +141,9 @@ COLORMAP_REGISTRY: dict[str, list[tuple[float, float, float, float]]] = {
     "rdylgn": _RDYLGN,
     "black-body radiation": _BLACK_BODY_RADIATION,
     "grayscale": _GRAYSCALE,
+    "turbo": _TURBO,
+    "terrain": _TERRAIN,
+    "magma": _MAGMA,
 }
 
 
