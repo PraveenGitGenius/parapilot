@@ -128,6 +128,20 @@ const multiview = [
     tools: ['render', 'streamlines'],
     field: 'kitchen.vtk',
   },
+  {
+    src: '/parapilot/showcase/drivaerml_multiview.png',
+    title: 'DrivAerML — Automotive CFD',
+    desc: '8.8M cells SA-DDES — Cp + WSS + Y-slice velocity + X-slice wake, boundary VTP + slices',
+    tools: ['render', 'slice', 'contour'],
+    field: 'boundary.vtp',
+  },
+  {
+    src: '/parapilot/showcase/windsorml_multiview.png',
+    title: 'WindsorML — GPU WMLES',
+    desc: '2.5M pts GPU-LES — Cp + Cf_x + y+ + Cp\u2032, wall-resolved external aero',
+    tools: ['render', 'contour'],
+    field: 'boundary.vtu',
+  },
 ];
 
 const analysis = [
@@ -180,7 +194,7 @@ const videos = [
         <span class="gradient-text-white">Real renders, zero GUI</span>
       </h2>
       <p class="mt-4 text-text-secondary max-w-xl mx-auto text-lg">
-        Official VTK examples rendered by parapilot — 8 tools, 11 datasets, multi-view + volume + surface
+        13 datasets from medical, CFD, FEA, automotive aero — 8 tools, multi-view + volume + surface
       </p>
     </div>
 
@@ -431,7 +445,7 @@ const videos = [
 
     <div class="text-center mt-10">
       <p class="text-text-secondary/50 text-sm font-mono">
-        render &middot; contour &middot; streamlines &middot; clip &middot; slice &middot; animate &middot; extract_stats &middot; plot_over_line &mdash; 8 tools, 11 datasets, 14 colormaps
+        render &middot; contour &middot; streamlines &middot; clip &middot; slice &middot; animate &middot; extract_stats &middot; plot_over_line &mdash; 8 tools, 13 datasets, 14 colormaps
       </p>
     </div>
   </div>
