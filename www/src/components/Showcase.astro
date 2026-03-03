@@ -1,18 +1,18 @@
 ---
 const renders = [
   {
+    src: '/parapilot/showcase/ct_head_contour.png',
+    title: 'CT Skull Isosurface',
+    tool: 'parapilot.contour',
+    desc: 'Bone extraction at HU 1200 — Inferno colormap, 6.16M voxels → 277K polygons',
+    field: 'head.vti',
+  },
+  {
     src: '/parapilot/showcase/dragon.png',
     title: 'Stanford Dragon',
     tool: 'parapilot.render',
     desc: '437K polygons — Plasma colormap, Elevation field',
     field: 'dragon.ply',
-  },
-  {
-    src: '/parapilot/showcase/ct_head_contour.png',
-    title: 'CT Skull Isosurface',
-    tool: 'parapilot.contour',
-    desc: 'Bone extraction at HU 1200 — Inferno colormap',
-    field: 'head.vti',
   },
   {
     src: '/parapilot/showcase/streamlines.png',
@@ -60,12 +60,12 @@ const renders = [
 
 const animations = [
   {
-    gif: '/parapilot/showcase/dragon_orbit.gif',
-    webp: '/parapilot/showcase/dragon_orbit.webp',
-    title: 'Dragon 360° Orbit',
-    tool: 'parapilot.animate',
-    desc: '24 frames, 8fps — Plasma colormap, camera orbit',
-    field: 'dragon.ply',
+    gif: '/parapilot/showcase/ct_slice_sweep.gif',
+    webp: '/parapilot/showcase/ct_slice_sweep.webp',
+    title: 'CT Axial Slice Sweep',
+    tool: 'parapilot.slice',
+    desc: '36 frames — Z-axis sweep through 6.16M voxels, Grayscale',
+    field: 'head.vti',
   },
   {
     gif: '/parapilot/showcase/ct_skull_orbit.gif',
@@ -211,6 +211,56 @@ const videos = [
       ))}
     </div>
 
+    <!-- Multi-View Analysis showcase -->
+    <div class="mt-16 fade-up">
+      <div class="text-center mb-8">
+        <span class="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-mono font-medium tracking-wider mb-3">
+          MULTI-VIEW ANALYSIS
+        </span>
+        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">
+          <span class="gradient-text-white">One dataset, four perspectives</span>
+        </h3>
+        <p class="mt-3 text-text-secondary max-w-lg mx-auto">
+          Comprehensive scientific analysis — contour, volume, slice, and line profile from a single dataset
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {multiview.map((m) => (
+          <div class="card-hover overflow-hidden group cursor-default">
+            <div class="relative">
+              <picture>
+                <source srcset={m.src.replace('.png', '.webp')} type="image/webp" />
+                <img
+                  src={m.src}
+                  alt={m.title}
+                  class="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </picture>
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
+              <div class="absolute top-3 right-3">
+                <span class="px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-400 text-[10px] font-mono backdrop-blur-sm">
+                  4-VIEW
+                </span>
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 p-4">
+                <div class="flex flex-wrap gap-1 mb-1.5">
+                  {m.tools.map((t: string) => (
+                    <span class="inline-block px-1.5 py-0.5 rounded-full bg-accent/20 text-accent text-[9px] font-mono">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <h3 class="text-sm font-semibold text-text-primary">{m.title}</h3>
+                <p class="text-xs text-text-secondary/70 mt-0.5">{m.desc}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
     <!-- Animation showcase -->
     <div class="mt-16 fade-up">
       <div class="text-center mb-8">
@@ -218,10 +268,10 @@ const videos = [
           ANIMATIONS
         </span>
         <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">
-          <span class="gradient-text-white">360° orbit, zero effort</span>
+          <span class="gradient-text-white">Animate, sweep, orbit</span>
         </h3>
         <p class="mt-3 text-text-secondary max-w-lg mx-auto">
-          Camera orbit animations generated programmatically — GIF, MP4, or WebM output
+          Slice sweeps and 360° orbit animations generated programmatically — GIF, MP4, or WebM
         </p>
       </div>
 
@@ -298,56 +348,6 @@ const videos = [
                 </span>
                 <h3 class="text-sm font-semibold text-text-primary">{v.title}</h3>
                 <p class="text-xs text-text-secondary/70 mt-0.5">{v.desc}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <!-- Multi-View Analysis showcase -->
-    <div class="mt-16 fade-up">
-      <div class="text-center mb-8">
-        <span class="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-mono font-medium tracking-wider mb-3">
-          MULTI-VIEW ANALYSIS
-        </span>
-        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">
-          <span class="gradient-text-white">One dataset, four perspectives</span>
-        </h3>
-        <p class="mt-3 text-text-secondary max-w-lg mx-auto">
-          Comprehensive scientific analysis — contour, volume, slice, and line profile from a single dataset
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {multiview.map((m) => (
-          <div class="card-hover overflow-hidden group cursor-default">
-            <div class="relative">
-              <picture>
-                <source srcset={m.src.replace('.png', '.webp')} type="image/webp" />
-                <img
-                  src={m.src}
-                  alt={m.title}
-                  class="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
-                  loading="lazy"
-                />
-              </picture>
-              <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
-              <div class="absolute top-3 right-3">
-                <span class="px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-400 text-[10px] font-mono backdrop-blur-sm">
-                  4-VIEW
-                </span>
-              </div>
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <div class="flex flex-wrap gap-1 mb-1.5">
-                  {m.tools.map((t: string) => (
-                    <span class="inline-block px-1.5 py-0.5 rounded-full bg-accent/20 text-accent text-[9px] font-mono">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <h3 class="text-sm font-semibold text-text-primary">{m.title}</h3>
-                <p class="text-xs text-text-secondary/70 mt-0.5">{m.desc}</p>
               </div>
             </div>
           </div>
