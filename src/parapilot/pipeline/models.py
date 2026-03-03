@@ -74,7 +74,7 @@ class RenderDef(BaseModel):
     below_range_color: list[float] | None = None  # [R,G,B] for values below scalar_range
     camera: CameraDef = Field(default_factory=CameraDef)
     resolution: list[int] = Field(default=[1920, 1080])
-    background: list[float] = Field(default=[1.0, 1.0, 1.0])
+    background: list[float] = Field(default=[0.2, 0.2, 0.2])
     transparent: bool = False
     opacity: float = 1.0
     point_size: float = 1.0  # Scale factor for Point Gaussian (1.0 = auto-estimated particle spacing)

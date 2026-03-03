@@ -343,6 +343,8 @@ def _resolve_renderable(data: vtk.vtkDataObject) -> vtk.vtkDataSet | None:
     import vtk
 
     if isinstance(data, vtk.vtkDataSet):
+        if data.GetNumberOfPoints() == 0:
+            return None
         return data
 
     if isinstance(data, vtk.vtkMultiBlockDataSet):
@@ -350,7 +352,10 @@ def _resolve_renderable(data: vtk.vtkDataObject) -> vtk.vtkDataSet | None:
         geom = vtk.vtkCompositeDataGeometryFilter()
         geom.SetInputData(data)
         geom.Update()
-        return geom.GetOutput()
+        result = geom.GetOutput()
+        if result.GetNumberOfPoints() == 0:
+            return None
+        return result
 
     return None
 

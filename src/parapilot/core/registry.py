@@ -59,10 +59,10 @@ FILTER_REGISTRY: dict[str, dict[str, Any]] = {
         "params": {
             "vectors": {"type": "list", "default": None},
             "seed_type": {"type": "str", "default": "Line"},
-            "seed_point1": {"type": "list[float]", "length": 3, "default": [0, 0, 0]},
-            "seed_point2": {"type": "list[float]", "length": 3, "default": [1, 0, 0]},
+            "seed_point1": {"type": "list[float]", "length": 3, "default": None},
+            "seed_point2": {"type": "list[float]", "length": 3, "default": None},
             "seed_resolution": {"type": "int", "default": 20},
-            "max_length": {"type": "float", "default": 1.0},
+            "max_length": {"type": "float", "default": 0.0},
             "direction": {"type": "str", "default": "BOTH"},
         },
     },

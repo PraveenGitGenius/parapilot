@@ -149,6 +149,15 @@ def contour(
         else vtk.vtkDataObject.FIELD_ASSOCIATION_POINTS
     )
 
+    # Get data range for diagnostics
+    pd = data.GetPointData() if association.upper() == "POINTS" else data.GetCellData()
+    arr = pd.GetArray(name) if pd else None
+    if arr is None:
+        msg = f"Array '{name}' not found in {association} data"
+        raise ValueError(msg)
+
+    data_range = arr.GetRange(0)
+
     filt = vtk.vtkContourFilter()
     filt.SetInputData(data)
     filt.SetInputArrayToProcess(0, 0, 0, assoc, name)
@@ -157,7 +166,17 @@ def contour(
         filt.SetValue(i, val)
 
     filt.Update()
-    return filt.GetOutput()
+    output = filt.GetOutput()
+
+    if output.GetNumberOfCells() == 0:
+        msg = (
+            f"Contour produced empty output: no cells at isovalues {vals}. "
+            f"Array '{name}' range is [{data_range[0]:.6g}, {data_range[1]:.6g}]. "
+            f"Choose isovalues within this range."
+        )
+        raise ValueError(msg)
+
+    return output
 
 
 def isosurface(
@@ -231,8 +250,8 @@ def threshold(
 def streamlines(
     data: vtk.vtkDataObject,
     array_name: str | None = None,
-    seed_point1: tuple[float, float, float] = (0, 0, 0),
-    seed_point2: tuple[float, float, float] = (1, 0, 0),
+    seed_point1: tuple[float, float, float] | None = None,
+    seed_point2: tuple[float, float, float] | None = None,
     num_seeds: int = 25,
     max_length: float = 0.0,
     integration_direction: str = "both",
@@ -271,6 +290,30 @@ def streamlines(
         num_seeds = seed_resolution
     if direction is not None and integration_direction == "both":
         integration_direction = direction.lower()
+
+    # Auto-compute seed points from data bounds if not specified
+    if seed_point1 is None or seed_point2 is None:
+        if hasattr(data, "GetBounds"):
+            b = data.GetBounds()
+            cx = (b[0] + b[1]) / 2
+            cy = (b[2] + b[3]) / 2
+            cz = (b[4] + b[5]) / 2
+            dx = b[1] - b[0]
+            dy = b[3] - b[2]
+            dz = b[5] - b[4]
+            # Place seed line along longest axis, centered
+            if dx >= dy and dx >= dz:
+                seed_point1 = seed_point1 or (b[0] + dx * 0.2, cy, cz)
+                seed_point2 = seed_point2 or (b[1] - dx * 0.2, cy, cz)
+            elif dy >= dz:
+                seed_point1 = seed_point1 or (cx, b[2] + dy * 0.2, cz)
+                seed_point2 = seed_point2 or (cx, b[3] - dy * 0.2, cz)
+            else:
+                seed_point1 = seed_point1 or (cx, cy, b[4] + dz * 0.2)
+                seed_point2 = seed_point2 or (cx, cy, b[5] - dz * 0.2)
+        else:
+            seed_point1 = seed_point1 or (0, 0, 0)
+            seed_point2 = seed_point2 or (1, 0, 0)
 
     line = vtk.vtkLineSource()
     line.SetPoint1(*seed_point1)
