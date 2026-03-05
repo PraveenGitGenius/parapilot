@@ -822,13 +822,36 @@ def _protect_stdout() -> None:
 
 
 def main() -> None:
-    """Run the MCP server."""
+    """Run the MCP server.
+
+    Supports ``--transport`` CLI argument:
+        stdio (default) — standard I/O for local MCP clients
+        sse — Server-Sent Events over HTTP (remote access)
+        streamable-http — StreamableHTTP transport (FastMCP 2.0+)
+    """
+    import argparse
     import asyncio
 
     from parapilot.core.runner import VTKRunner
 
+    parser = argparse.ArgumentParser(description="parapilot MCP Server")
+    parser.add_argument(
+        "--transport",
+        choices=["stdio", "sse", "streamable-http"],
+        default="stdio",
+        help="MCP transport mode (default: stdio)",
+    )
+    parser.add_argument(
+        "--host", default="0.0.0.0", help="Host for HTTP transports (default: 0.0.0.0)"
+    )
+    parser.add_argument(
+        "--port", type=int, default=8000, help="Port for HTTP transports (default: 8000)"
+    )
+    args = parser.parse_args()
+
     # Protect MCP JSON-RPC stream from VTK binary stdout pollution
-    _protect_stdout()
+    if args.transport == "stdio":
+        _protect_stdout()
 
     # Clean up any orphaned parapilot_* Docker containers from previous crashes
     try:
@@ -845,7 +868,13 @@ def main() -> None:
 
     _register_resources()
     _register_prompts()
-    mcp.run()
+
+    if args.transport == "stdio":
+        mcp.run()
+    elif args.transport == "sse":
+        mcp.run(transport="sse", host=args.host, port=args.port)
+    elif args.transport == "streamable-http":
+        mcp.run(transport="streamable-http", host=args.host, port=args.port)
 
 
 if __name__ == "__main__":
