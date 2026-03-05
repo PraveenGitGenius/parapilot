@@ -1,5 +1,5 @@
 name: parapilot
-description: Headless CAE post-processing MCP server for AI coding assistants. Visualize CFD/FEA simulation results through 16 tools — render, slice, contour, clip, streamlines, cinematic, compare, preview_3d, and more.
+description: Headless CAE post-processing MCP server for AI coding assistants. Visualize CFD/FEA simulation results through 18 tools — render, slice, contour, clip, streamlines, cinematic, compare, batch, probe, preview_3d, and more.
 vendor: kimimgo
 sourceUrl: https://github.com/kimimgo/parapilot
 homepage: https://kimimgo.github.io/parapilot
