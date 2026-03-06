@@ -1,0 +1,89 @@
+site_name: parapilot
+site_description: Headless CAE post-processing MCP server for AI coding assistants
+site_url: https://kimimgo.github.io/parapilot/docs/
+repo_url: https://github.com/kimimgo/parapilot
+repo_name: kimimgo/parapilot
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+            heading_level: 3
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - Docker: getting-started/docker.md
+  - Tools:
+      - Overview: tools/overview.md
+      - Rendering: tools/rendering.md
+      - Analysis: tools/analysis.md
+      - Animation: tools/animation.md
+      - Pipeline DSL: tools/pipeline.md
+  - API Reference:
+      - Server: api/server.md
+      - Engine:
+          - Renderer: api/engine/renderer.md
+          - Filters: api/engine/filters.md
+          - Readers: api/engine/readers.md
+          - Colormaps: api/engine/colormaps.md
+          - Camera: api/engine/camera.md
+      - Core:
+          - Pipeline Models: api/core/models.md
+          - Compiler: api/core/compiler.md
+          - Runner: api/core/runner.md
+      - Presets: api/presets.md
+  - Examples:
+      - Thermal Analysis: examples/thermal.md
+  - Contributing: contributing.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kimimgo/parapilot
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/mcp-server-parapilot/

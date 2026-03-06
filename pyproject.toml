@@ -27,6 +27,10 @@ dependencies = [
 [project.optional-dependencies]
 mesh = ["meshio>=5.0", "trimesh>=4.0"]
 composite = ["pillow>=10.0", "matplotlib>=3.8"]
+docs = [
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.27",
+]
 all = ["mcp-server-parapilot[mesh,composite]"]
 dev = [
     "pytest>=8.0",
@@ -45,7 +49,7 @@ mcp-server-parapilot = "parapilot.server:main"
 [project.urls]
 Homepage = "https://kimimgo.github.io/parapilot"
 Repository = "https://github.com/kimimgo/parapilot"
-Documentation = "https://kimimgo.github.io/parapilot"
+Documentation = "https://kimimgo.github.io/parapilot/docs/"
 Issues = "https://github.com/kimimgo/parapilot/issues"
 
 [build-system]
